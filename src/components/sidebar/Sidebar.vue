@@ -55,6 +55,7 @@ export default {
     <SidebarLink to="/ChargeCollectionList" icon="fas fa-columns">Collection List</SidebarLink>
     <SidebarLink to="/ChargeCollection" icon="fas fa-columns">Charge Collection</SidebarLink>
     <SidebarLink to="/customerProfile" icon="fas fa-chart-bar">Customer Profile</SidebarLink>
+    <SidebarLink to="/transaction" icon="fas fa-chart-bar">Transaction</SidebarLink>
     <a @click="logout" class="link" > 
       <i class="icon fa-solid fa-right-from-bracket"></i>
       <transition name="fade">

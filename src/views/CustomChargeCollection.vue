@@ -49,201 +49,315 @@
                 </div>
                 
               </div><br>
+
+              <!-- Ref ID -->
               <div class="col" v-if="this.function == '2' || this.function == '4' || this.function == '5'">
                 <h6 class="fw-semibold">Ref. ID</h6>
                 <input  class="input col-5" type="text" v-model=this.id />
                 <a @click="getFee(this.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="search"><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a><br><br>
               </div>
+
+              <!-- Product -->
               <div class="col">
                 <h6 class="fw-semibold">Product ID</h6>
                 <div class="col fs-6" >
                     <input class="input col-8" type="text" :value=this.productSelect disabled/>
-                    <a v-if="this.function != 0" @click="changeProduct()" data-bs-toggle="tooltip" data-bs-placement="top" title="search"><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a>
-                    <a v-else data-bs-toggle="tooltip" data-bs-placement="top" title="please select function" ><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a>
+                    <a v-if="this.function == 0" data-bs-toggle="tooltip" data-bs-placement="top" title="please select function" ><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a>
+                    <button v-else type="button" class="btn" data-bs-toggle="modal" data-bs-target="#myModal" title="search">
+                      <i class="fa fa-search" style="cursor: pointer;" ></i>
+                    </button>
+                    <!-- The Modal -->
+                    <div class="modal fade" id="myModal">
+                      <div class="modal-dialog modal-lg ">
+                        <div class="modal-content">
+                          <!-- Modal Header -->
+                          <div class="modal-header">
+                            <h4 class="modal-title">Product ID List</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                          </div>
+                          <!-- Modal body -->
+                          <div class="modal-body p-5">
+                            <div class="row my-md-2 py-md-2 rounded-3 text-start shadow text-white" style="background-color:#033495 ;">
+                              <div class="col-1"></div>
+                              <div class="col fs-6 ps-md-5">
+                                Product Code.
+                              </div>
+                              <div class="col fs-6 ps-md-5" style="border-left: 3px solid #FFFFFF">
+                                Product Desc.
+                              </div>
+                            </div>
+                            <div class="row my-md-1 bg-white py-md-3 rounded-4 text-start shadow"  v-for="pro in products" v-bind:key="pro">
+                              <div class="col-1 text-center" >
+                                <button v-if="this.productSelect == pro.name" style="border: none; background: none;">
+                                  <i class='fa far fa-check-circle' style="cursor: pointer; color: #FF0303;"></i>
+                                </button>
+                                <button v-else v-on:click="getProduct(pro.name,pro.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="select" style="border: none; background: none;">
+                                  <i class='fa	far fa-circle' style="cursor: pointer;"></i>
+                                </button>
+                              </div>
+                              <div class="col fs-6 ps-md-5" style="border-left: 3px solid #BABABA">
+                                {{pro.name}}
+                              </div>
+                              <div class="col fs-6 ps-md-5" style="border-left: 3px solid #BABABA">
+                                {{ pro.description }}
+                              </div>
+                            </div>
+                          </div>
+                          <!-- Modal footer -->
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
                 </div>
               </div><br>
+
+              <!-- Charge Group -->
               <div class="col">
                 <h6 class="fw-semibold">Charge Group <i class="fa fa-asterisk" style="color:red; font-size: 8px;"></i></h6>
                 <div class="col fs-6" >
                     <input class="input col-8" type="text" :value=this.chargeGroupSelect disabled/>
-                    <a v-if="this.function != 0" @click="changeChargeGroup()" data-bs-toggle="tooltip" data-bs-placement="top" title="search"><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a>
-                    <a v-else data-bs-toggle="tooltip" data-bs-placement="top" title="please select function" ><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a>
+                    <a v-if="this.function == 0" data-bs-toggle="tooltip" data-bs-placement="top" title="please select function" ><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a>
+                    <button v-else type="button" class="btn" data-bs-toggle="modal" data-bs-target="#modalGroup" title="search">
+                      <i class="fa fa-search" style="cursor: pointer;" ></i>
+                    </button>
+                    <!-- The Modal -->
+                  <div class="modal fade" id="modalGroup">
+                    <div class="modal-dialog modal-lg ">
+                      <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header" style="background-color:#033495 ; font-size: 18px; color: #FFFFFF;">
+                          <h4 class="modal-title">Charge Group ID List</h4>
+                          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" style="color: #FFFFFF;"></button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="modal-body p-5">
+                          <div class="row my-md-2 py-md-2 rounded-4 text-start shadow text-dark fw-bold fs-6 text-white" style="background-color: #7D7D7D;">
+                            <div class="col-1"></div>
+                            <div class="col fs-6 ps-md-5">
+                              Charge Code.
+                            </div>
+                            <div class="col fs-6 ps-md-5" style="border-left: 3px solid #6B6B6B">
+                              Charge Desc.
+                            </div>
+                          </div>
+                          <div class="row my-md-1 bg-white py-md-3 rounded-4 text-start shadow" v-for="g in chargeGroup" v-bind:key="g" >
+                            <div class="col-1 text-center" >
+                              <button v-if="chargeGroupSelect == g.name" style="border: none; background: none;">
+                                <i class=' fa far fa-check-circle' style="cursor: pointer; color: #FF0303;"></i>
+                              </button>
+                              <button v-else v-on:click="getChargeGroup(g.name,g.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="select" style="border: none; background: none;">
+                                <i class='fa	far fa-circle' style="cursor: pointer;"></i>
+                              </button>
+                            </div>
+                            <div class="col fs-6 ps-md-5" style="border-left: 3px solid #BABABA">
+                              {{g.name}}
+                            </div>
+                            <div class="col fs-6 ps-md-5" style="border-left: 3px solid #BABABA">
+                              {{ g.description }}
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div><br>
+
+              <!-- Charge Event ID -->
               <div class="col">
                 <h6 class="fw-semibold">Charge Event ID <i class="fa fa-asterisk" style="color:red; font-size: 8px;"></i></h6>
                 <div class="col fs-6" >
-                    <input class="input col-8" type="text" :value=this.eventIdSelect disabled/>
-                    <a v-if="this.chargeGroupSelect" @click="changeEventID()" data-bs-toggle="tooltip" data-bs-placement="top" title="search"><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a>
-                    <a v-else-if="this.function == 0" @click="changeCustomer()" data-bs-toggle="tooltip" data-bs-placement="top" title="please select function" ><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a>
-                    <a v-else data-bs-toggle="tooltip" data-bs-placement="top" title="please select charge group" ><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a>
+                  <input class="input col-8" type="text" :value=this.eventIdSelect disabled/>
+                  <a v-if="this.function == 0" data-bs-toggle="tooltip" data-bs-placement="top" title="please select function" ><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a>
+                  <button v-else-if="chargeGroupSelect" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#modalEvent" title="search">
+                    <i class="fa fa-search" style="cursor: pointer;" ></i>
+                  </button>
+                  <a v-else data-bs-toggle="tooltip" data-bs-placement="top" title="please select customer ID" ><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a>
+                  <!-- The Modal -->
+                  <div class="modal fade" id="modalEvent">
+                    <div class="modal-dialog modal-lg ">
+                      <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header" style="background-color:#033495 ; font-size: 18px; color: #FFFFFF;">
+                          <h4 class="modal-title">Charge Event ID List</h4>
+                          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" style="color: #FFFFFF;"></button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="modal-body p-5">
+                          <div class="row my-md-2 py-md-2 rounded-4 text-start shadow text-dark fw-bold fs-6 text-white" style="background-color: #7D7D7D;">
+                            <div class="col-1"></div>
+                            <div class="col fs-6 ps-md-5">
+                              Charge Event ID
+                            </div>
+                            <div class="col fs-6 ps-md-5" style="border-left: 3px solid #FFFFFF">
+                              Charge Event Description
+                            </div>
+                          </div>
+                          <div class="row my-md-1 bg-white py-md-3 rounded-4 text-start shadow" v-for="g in chargeEventId" v-bind:key="g" >
+                            <div class="col-1 text-center" >
+                              <button v-if="eventIdSelect == g.name" style="border: none; background: none;">
+                                <i class=' fa far fa-check-circle' style="cursor: pointer; color: #FF0303;"></i>
+                              </button>
+                              <button v-else v-on:click="getEventId(g.name,g.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="select" style="border: none; background: none;">
+                                <i class='fa	far fa-circle' style="cursor: pointer;"></i>
+                              </button>
+                            </div>
+                            <div class="col fs-6 ps-md-5" style="border-left: 3px solid #BABABA">
+                              {{g.name}}
+                            </div>
+                            <div class="col fs-6 ps-md-5" style="border-left: 3px solid #BABABA">
+                              {{ g.description }}
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div><br>
+
             </div>
             <div class="col text-start" style="border-left: 2px solid #5252AB">
+              
+              <!-- Customer -->
               <div class="col">
                 <h6 class="fw-semibold">Customer ID <i class="fa fa-asterisk" style="color:red; font-size: 8px;"></i></h6>
                 <div class="col fs-6" >
                     <input class="input col-8" type="text" :value=this.customerSelect disabled/>
-                    <a v-if="this.function != 0" @click="changeCustomer()" data-bs-toggle="tooltip" data-bs-placement="top" title="search" ><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a>
-                    <a v-else data-bs-toggle="tooltip" data-bs-placement="top" title="please select function" ><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a>
+                    <a v-if="this.function == 0" data-bs-toggle="tooltip" data-bs-placement="top" title="please select function" ><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a>
+                    <button v-else type="button" class="btn" data-bs-toggle="modal" data-bs-target="#modalCus" title="search">
+                      <i class="fa fa-search" style="cursor: pointer;" ></i>
+                    </button>
 
+                    <!-- The Modal -->
+                    <div class="modal fade" id="modalCus">
+                      <div class="modal-dialog modal-lg ">
+                        <div class="modal-content">
+                          <!-- Modal Header -->
+                          <div class="modal-header" style="background-color:#033495 ; font-size: 18px; color: #FFFFFF;">
+                            <h4 class="modal-title">Account ID List</h4>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" style="color: #FFFFFF;"></button>
+                          </div>
+                          <!-- Modal body -->
+                          <div class="modal-body p-5">
+                            <div class="row my-md-2 py-md-2 rounded-4 text-start shadow text-dark fw-bold fs-6 text-white" style="background-color: #7D7D7D;">
+                              <div class="col-1"></div>
+                              <div class="col fs-6 ps-md-5">
+                                CIF ID
+                              </div>
+                              <div class="col fs-6 ps-md-5 text-end" style="border-left: 3px solid #FFFFFF;">
+                                <input type="text" placeholder="Search..." style="border-radius: 10px; border-top-style: hidden; border-right-style: hidden; border-left-style: hidden;" v-model="authorNameSearchString" />
+                                <!-- <i class="fas fa-search" style="color: #b8bfd6;"></i> -->
+                              </div>
+                            </div>
+                            <div class="row my-md-1 bg-white py-md-3 rounded-4 text-start shadow"  v-for="c in filteredCustomer" v-bind:key="c">
+                              <div class="col-1 text-center" >
+                                <button v-if="this.customerSelect == c.id" style="border: none; background: none;">
+                                  <i class=' fa far fa-check-circle' style="cursor: pointer; color: #FF0303;"></i>
+                                </button>
+                                <button v-else v-on:click="getCustomer(c.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="select" style="border: none; background: none;">
+                                  <i class='fa	far fa-circle' style="cursor: pointer;"></i>
+                                </button>
+                              </div>
+                              <div class="col fs-6 ps-md-5" style="border-left: 3px solid #BABABA">
+                                {{c.id}}
+                              </div>
+                              <div class="col fs-6 ps-md-5"></div>
+                            </div>
+                          </div>
+
+                          <!-- Modal footer -->
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
                 </div>
               </div><br>
+              
+              <!-- Account -->
               <div class="col">
                 <h6 class="fw-semibold">Account ID <i class="fa fa-asterisk" style="color:red; font-size: 8px;"></i></h6>
                 <div class="col fs-6" >
-                    <input class="input col-8" type="text" :value=this.accSelect disabled/>
-                    <a v-if="this.customerSelect" @click="changeAccount()" data-bs-toggle="tooltip" data-bs-placement="top" title="search" ><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a>
-                    <a v-else-if="this.function == 0" data-bs-toggle="tooltip" data-bs-placement="top" title="please select function" ><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a>
-                    <a v-else data-bs-toggle="tooltip" data-bs-placement="top" title="please select customer ID" ><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a>
+                  <input class="input col-8" type="text" :value=this.accSelect disabled/>
+                  <a v-if="this.function == 0" data-bs-toggle="tooltip" data-bs-placement="top" title="please select function" ><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a>
+                  <button v-else-if="this.customerSelect" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#modalAcc" title="search">
+                    <i class="fa fa-search" style="cursor: pointer;" ></i>
+                  </button>
+                  <a v-else data-bs-toggle="tooltip" data-bs-placement="top" title="please select customer ID" ><i class="fa fa-search ms-2" style="cursor: pointer;" ></i></a>
+
+                  <!-- The Modal -->
+                  <div class="modal fade" id="modalAcc">
+                          <div class="modal-dialog modal-lg ">
+                            <div class="modal-content">
+                              <!-- Modal Header showCustomer-->
+                              <div class="modal-header" style="background-color:#033495 ; font-size: 18px; color: #FFFFFF;">
+                                <h4 class="modal-title">A/cs List</h4>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" style="color: #FFFFFF;"></button>
+                              </div>
+                              <!-- Modal body -->
+                              <div class="modal-body p-5">
+                                <div class="row my-md-2 py-md-2 rounded-4 text-start shadow text-dark fw-bold fs-6 text-white" style="background-color: #7D7D7D;">
+                                  <div class="col-1"></div>
+                                  <div class="col fs-6 ps-md-5">
+                                    A/C Id.
+                                  </div>
+                                  <div class="col fs-6 ps-md-5" style="border-left: 3px solid #FFFFFF">
+                                    CIF ID.
+                                  </div>
+                                </div>
+                                <div class="row my-md-1 bg-white py-md-3 rounded-4 text-start shadow"  v-for="a in acc" v-bind:key="a" >
+                                  <div class="col-1 text-center" >
+                                    <button v-if="accSelect == a.id" style="border: none; background: none;">
+                                      <i class=' fa far fa-check-circle' style="cursor: pointer; color: #FF0303;"></i>
+                                    </button>
+                                    <button v-else v-on:click="getAcc(a.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="select" style="border: none; background: none;">
+                                      <i class='fa	far fa-circle' style="cursor: pointer;"></i>
+                                    </button>
+                                  </div>
+                                  <div class="col fs-6 ps-md-5" style="border-left: 3px solid #BABABA">
+                                    {{a.id}}
+                                  </div>
+                                  <div class="col fs-6 ps-md-5" style="border-left: 3px solid #BABABA">
+                                    {{ a.customer.id }}
+                                  </div>
+                                </div>
+                              </div>
+
+                              <!-- Modal footer -->
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
                 </div>
               </div><br>
+
             </div>
           </div><br>
 
           <div v-if="showCollection" class="text-end me-md-5">
             <button class="btn btn-success" v-on:click="getCollection" disabled>Go</button>
           </div>
+          
           <div v-else class="text-end me-md-5">
             <button class="btn btn-success" v-on:click="getCollection">Go</button>
           </div><br><br>
-
-          <!-- dropdrown -->
-          <div v-if="showProduct">
-            <h6 class = "mt-4 text-start fw-semibold">Product ID List</h6>
-              <div class="row my-md-2 py-md-2 rounded-3 text-start shadow text-white" style="background-color:#033495 ;">
-                <div class="col-1"></div>
-                <div class="col fs-6 ps-md-5">
-                  Product Code.
-                </div>
-                <div class="col fs-6 ps-md-5" style="border-left: 3px solid #FFFFFF">
-                  Product Desc.
-                </div>
-              </div>
-              <div class="row my-md-1 bg-white py-md-3 rounded-4 text-start shadow"  v-for="product in products" v-bind:key="product">
-                <div class="col-1 text-center" >
-                  <button v-on:click="getProduct(product.name,product.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="select" style="border: none; background: none;">
-                    <i class='fa fas fa-angle-down' style="cursor: pointer;"></i>
-                  </button>
-                </div>
-                <div class="col fs-6 ps-md-5" style="border-left: 3px solid #BABABA">
-                  {{product.name}}
-                </div>
-                <div class="col fs-6 ps-md-5" style="border-left: 3px solid #BABABA">
-                  {{ product.description }}
-                </div>
-              </div>
-          </div>
-
-          <div v-if="showchargeGroup">
-            <div class="row my-md-2 py-md-2 rounded-4 text-start shadow text-white ps-md-4" style="background-color:#033495 ; font-size: 18px;">Charge Group ID List</div>
-            <div class="row my-md-2 py-md-2 rounded-4 text-start shadow text-dark fw-bold fs-6 bg-white" >
-              <div class="col-1"></div>
-              <div class="col fs-6 ps-md-5">
-                Charge Code.
-              </div>
-              <div class="col fs-6 ps-md-5" style="border-left: 3px solid #6B6B6B">
-                Charge Desc.
-              </div>
-            </div>
-            <div class="row my-md-1 bg-white py-md-3 rounded-4 text-start shadow"  v-for="g in chargeGroup" v-bind:key="g">
-              <div class="col-1 text-center" >
-                <button v-if="this.function == 1 || this.function == 3" v-on:click="getChargeGroup(g.name,g.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="select" style="border: none; background: none;">
-                  <i class='fa fas fa-angle-down' style="cursor: pointer;"></i>
-                </button>
-                <button v-else v-on:click="getChargeGroupNew(g.name,g.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="select" style="border: none; background: none;">
-                  <i class='fa fas fa-angle-down' style="cursor: pointer;"></i>
-                </button>
-              </div>
-              <div class="col fs-6 ps-md-5" style="border-left: 3px solid #BABABA">
-                {{g.name}}
-              </div>
-              <div class="col fs-6 ps-md-5" style="border-left: 3px solid #BABABA">
-                {{ g.description }}
-              </div>
-            </div>
-          </div>
-
-
-          <div v-if="showEventId ">
-            <div class="row my-md-2 py-md-2 rounded-4 text-start shadow text-white ps-md-4" style="background-color:#033495 ; font-size: 18px;">Charge Event ID</div>
-            <div class="row my-md-2 py-md-2 rounded-4 text-start shadow text-dark fw-bold fs-6 bg-white" >
-              <div class="col-1"></div>
-              <div class="col fs-6 ps-md-5">
-                Charge Event ID
-              </div>
-              <div class="col fs-6 ps-md-5" style="border-left: 3px solid #FFFFFF">
-                Charge Event Description
-              </div>
-            </div>
-            <div class="row my-md-1 bg-white py-md-3 rounded-4 text-start shadow"  v-for="g in chargeEventId" v-bind:key="g">
-              <div class="col-1 text-center" >
-                <button v-on:click="getEventId(g.name,g.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="select" style="border: none; background: none;">
-                  <i class='fa fas fa-angle-down' style="cursor: pointer;"></i>
-                </button>
-              </div>
-              <div class="col fs-6 ps-md-5" style="border-left: 3px solid #BABABA">
-                {{g.name}}
-              </div>
-              <div class="col fs-6 ps-md-5" style="border-left: 3px solid #BABABA">
-                {{ g.description }}
-              </div>
-            </div>
-          </div>
-
-
-          <div v-if="showCustomer">
-            <div class="row my-md-2 py-md-2 rounded-4 text-start shadow text-white ps-md-4" style="background-color:#033495 ; font-size: 18px;">Account ID List</div>
-            <div class="row my-md-2 py-md-2 rounded-4 text-start shadow text-dark fw-bold fs-6 bg-white" >
-              <div class="col-1"></div>
-              <div class="col fs-6 ps-md-5">
-                CIF ID
-              </div>
-              <div class="col fs-6 ps-md-5" style="border-left: 3px solid #FFFFFF">
-                <input type="text" placeholder="Search..." v-model="authorNameSearchString" />
-              </div>
-            </div>
-            <div class="row my-md-1 bg-white py-md-3 rounded-4 text-start shadow"  v-for="c in filteredCustomer" v-bind:key="c">
-              <div class="col-1 text-center" >
-                <button v-on:click="getCustomer(c.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="select" style="border: none; background: none;">
-                  <i class='fa fas fa-angle-down' style="cursor: pointer;"></i>
-                </button>
-              </div>
-              <div class="col fs-6 ps-md-5" style="border-left: 3px solid #BABABA">
-                {{c.id}}
-              </div>
-              <div class="col fs-6 ps-md-5"></div>
-            </div>
-          </div>
-
-          <div v-if="this.showAccount">
-            <div class="row my-md-2 py-md-2 rounded-4 text-start shadow text-white ps-md-4" style="background-color:#033495 ; font-size: 18px;">A/cs List</div>
-            <div class="row my-md-2 py-md-2 rounded-4 text-start shadow text-dark fw-bold fs-6 bg-white" >
-              <div class="col-1"></div>
-              <div class="col fs-6 ps-md-5">
-                A/C Id.
-              </div>
-              <div class="col fs-6 ps-md-5" style="border-left: 3px solid #FFFFFF">
-                CIF ID.
-              </div>
-            </div>
-
-            <div class="row my-md-1 bg-white py-md-3 rounded-4 text-start shadow" v-for="a in acc" v-bind:key="a">
-              <div class="col-1 text-center" >
-                <button v-on:click="getAcc(a.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="select" style="border: none; background: none;">
-                  <i class='fa fas fa-angle-down' style="cursor: pointer;"></i>
-                </button>
-              </div>
-              <div class="col fs-6 ps-md-5" style="border-left: 3px solid #BABABA">
-                {{a.id}}
-              </div>
-              <div class="col fs-6 ps-md-5" style="border-left: 3px solid #BABABA">
-                {{ a.customer.id }}
-              </div>
-            </div>
-          </div>
-
 
           <!-- Collection -->
           <br><div v-if="showCollection">
@@ -392,7 +506,6 @@ export default {
           function:0,
           id:'',
 
-          showProduct:null,
           productSelect:null,
           products:'',
 
@@ -408,7 +521,6 @@ export default {
 
           customer:'',
           customerSelect:null,
-          showCustomer:null,
           authorNameSearchString: "",
 
           showAccount:null,
@@ -517,9 +629,7 @@ export default {
           this.customerSelect = null
           this.accSelect = null
           this.showAccount = null
-          this.showCustomer = null
           this.showEventId = null
-          this.showProduct = null
           this.showchargeGroup = null
           this.showCollection = false
           this.fee.collectionRequests = []
@@ -528,12 +638,7 @@ export default {
             .push({ path: '/ChargeCollection/'+func })
       }
     },
-    changeProduct(){
-      this.showProduct = !this.showProduct
-      // console.log(this.fee.tranType)
-    },
     getProduct:function(name,id){
-      this.showProduct = !this.showProduct
       console.log("name --> "+name)
       this.productSelect = name
       this.fee.productid = id
@@ -582,7 +687,6 @@ export default {
       })
     },
     getChargeGroup:function(name,id){
-      this.showchargeGroup = !this.showchargeGroup
       console.log("name --> "+name)
       this.chargeGroupSelect = name
 
@@ -594,11 +698,7 @@ export default {
         console.log(err)
       })
     },
-    changeEventID:function(){
-      this.showEventId = !this.showEventId
-    },
     getEventId:function(name,id){
-      this.showEventId = !this.showEventId
       console.log("name --> "+name)
       this.eventIdSelect = name
 
@@ -638,12 +738,7 @@ export default {
       })
      
     },
-    changeCustomer:function(){
-      this.showCustomer = !this.showCustomer
-      console.log("cus --> "+this.showCustomer)
-    },
     getCustomer:function(id){
-      this.showCustomer = !this.showCustomer
       console.log("name --> "+id)
       this.customerSelect = id
 
@@ -995,9 +1090,7 @@ export default {
 
         
           this.showAccount = null
-          this.showCustomer = null
           this.showEventId = null
-          this.showProduct = null
           this.showchargeGroup = null
           this.showCollection = true
         }

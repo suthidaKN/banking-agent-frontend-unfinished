@@ -459,6 +459,10 @@
         <div class="text-end me-md-5">
           <button class="btn btn-success" v-on:click="getSummary">Go</button>
         </div><br><br>
+
+        <div v-if="showLogic">
+          showLogic
+        </div>
       </div>
 </div>
 </template>
@@ -476,8 +480,9 @@ export default {
         return{
             function : 0,
             radio:0,
-            // levelSelect : 0,
             productSelect : null,
+
+            showLogic : null,
 
             tranType:[],
             chargeLevel:[],
@@ -691,6 +696,23 @@ export default {
         },
         getSummary(){
           
+          this.showLogic = !this.showLogic
+          // if(chargeGroupSelect == ""){
+
+          // }
+          // else if(chargeGroupSelect == ""){
+
+          // }
+          // else if(chargeGroupSelect == ""){
+
+          // }
+          // else if(chargeGroupSelect == ""){
+
+          // }
+          // else if(chargeGroupSelect == ""){
+
+          // }
+          console.log(this.fee)
         }
     },
     created(){

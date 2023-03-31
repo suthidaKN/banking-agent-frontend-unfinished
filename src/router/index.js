@@ -52,6 +52,11 @@ const routes = [
     path:"/modify/:id",
     name: "ModifyCustomerPaymentProfile",
     component:modifyCus
+  },
+  {
+    path:"/transaction",
+    name: "Transaction",
+    component: () => import('@/views/Transaction.vue')
   }
 ];
 
